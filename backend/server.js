@@ -1,11 +1,14 @@
+const path = require('path');
 const express = require('express');
 const sqlite = require('sqlite3');
 const cors = require('cors');
+
 
 const app = express();
 const port = 3000;
 
 app.use(cors())
+app.use('/imgs', express.static(path.join(__dirname, 'imgs')));
 
 app.get('/api/libros', (req, res) => {
     const db = new sqlite.Database('./database.sqlite');
@@ -18,8 +21,6 @@ app.get('/api/libros', (req, res) => {
     });
     db.close();
 });
-
-
 
 app.listen(port, () => {
     console.log('Server activo...');
